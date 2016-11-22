@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite" parallel="tests">
+<test name="cucumber">
+<packages>
+
+<package name="com.compugain.test"/>
+</packages>
+</test>
+</suite>

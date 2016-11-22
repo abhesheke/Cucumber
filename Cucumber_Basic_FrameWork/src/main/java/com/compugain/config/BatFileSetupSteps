@@ -1,0 +1,5 @@
+cd\
+C:
+cd C:\APICucumberDemo
+mvn clean install
+pause

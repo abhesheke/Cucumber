@@ -1,0 +1,30 @@
+Feature: Navigate to Avenger Site
+
+Scenario: Create User in Vbrick
+
+Given I go to "https://qa-u1204-ha-31.lab.vbrick.com/" on "chrome"
+And I enter text into "avengerusernametextbox" as "avengerusername"
+And I enter text into "avengerpasswordtextbox" as "avengerpassword"
+And I click on "avengerloginsubmitbutton"
+And I click on "avengerhomepagesettingslinks"
+And I click on "Avengeruserslink"
+And I click on "avengeradduserbutton"
+And I enter text into "Avengeradduserfirstnametextbox" as "avengerusercreationfirstname"
+And I enter text into "Avengeradduserlastnametextbox" as "avengerusercreationfirstname"
+And I enter text into "Avengeradduseremailtextbox" as "avengerusercreationemail"
+And I enter text into "Avengeradduserusernametextbox" as "avengerusercreationfirstname"
+And I select value from dropdown "Avengeradduserlanguagetextbox" as "avengeruserlanguage"
+And I click on "Avengeradduserassignroleslocator"
+And I enter text into "Avengeradduseraddrolessearchboxlocator" as "avengeruseraccountsadminrole"
+And I click on "Avengerusercreationsubmitbutton"
+And I enter text into "Avengerusersearchbox" as "avengerusercreationfirstname"
+And I enter click on searchbox "Avengerusersearchbox"
+And I click on "Avengerusersearchresult"
+And I click on "Avengeruserconformationurl"
+And I enter text into "Avengernewuserpasswordtextbox" as "avengernewuserpassword"
+And I enter text into "Avengeruserconformationpasswordtextbox" as "avengernewuserpassword"
+And I select value from dropdown "Avengeradduserlanguagetextbox" as "avengernewusersecurityquestion"
+And I enter text into "Avengernewusersecurityanswertextbox" as "avengerusercreationfirstname"
+And I click on "Avengerpassconformationsubmitbutton"
+Then I Verify element displayed on Screen "true" is "logout"
+
