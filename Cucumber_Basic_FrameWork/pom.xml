@@ -137,9 +137,9 @@
 			<version>3.12</version>
 		</dependency>
 		<dependency>
-    		<groupId>xml-apis</groupId>
-    		<artifactId>xml-apis</artifactId>
-   			 <version>1.4.01</version>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -209,8 +209,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -218,14 +218,14 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
 				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>CucumberTestNG.xml</suiteXmlFile>
+					</suiteXmlFiles>
 					<forkCount>10</forkCount>
 					<reuseForks>true</reuseForks>
 					<testFailureIgnore>true</testFailureIgnore>
-					<property>
-						<name>SuiteName</name>
-						<value>${SuiteName}</value>
-						<echo>the suite file name is ${SuiteName} </echo>
-					</property>
+					<!-- <property> <name>SuiteName</name> <value>${SuiteName}</value> <echo>the 
+						suite file name is ${SuiteName} </echo> </property> -->
 					<includes>
 						<include>**/*${SuiteName}</include>
 						<exclude>**/*Runner.java</exclude>
@@ -250,8 +250,8 @@
 						</goals>
 						<configuration>
 							<glue>com.automationrhapsody.cucumber.parallel.tests</glue>
-							<featuresDirectory>src/test/resources/com</featuresDirectory>
-							<cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+							<featuresDirectory>src/test/resources/Features</featuresDirectory>
+							<cucumberOutputDir>target</cucumberOutputDir>
 							<format>json,html</format>
 							<projectName>compugain-cucumber-demo</projectName>
 							<outputDirectory>${project.build.directory}/site/cucumber-reports</outputDirectory>
