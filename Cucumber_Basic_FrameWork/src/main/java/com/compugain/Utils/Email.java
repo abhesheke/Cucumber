@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.compugain.beanfactory.BeanFactory;
-import com.compugain.test.Yahoo_Login_Test;
 
 public class Email  {
 	private static Logger logger = Logger.getLogger(Email.class);
@@ -83,4 +82,5 @@ public class Email  {
 	
 	
 	
-}*/
+}
+*/

@@ -21,6 +21,17 @@ public interface Setup {
 	public final int INTEGER=1,STRING=2,DOUBLE=3,FLOAT=4;
 	public final String sTESTDATAJSON="src/test/TestDataJSON/TestData.json";
 	public String sREADDATAFROMJSON="NO";
-	 public final String sDOWNLOADSPATH="/src/test/Downloads";
+	public final String sDOWNLOADSPATH="/src/test/Downloads";
+	public final String sSOURCE_REPORTSFOLDER="/test-output/html";
+	public final String sOUTPUT_ZIP_FILE_REPORTS = "/BackupReports";
+	public final String sOUTPUT_ZIP_FILE = sOUTPUT_ZIP_FILE_REPORTS +"/Cucumber_Reports.zip";
+	public final String  sEMAILCONFIG="/src/test/resources/EmailConfig/EmailConfiguration.properties";
+	public static String stestcasefile = "/src/test/resources/CucumberTestNG.xls";
+	public final String sPIECHARTLOCATION="/src/test/resources/ExecutionReport.jpeg";
+	public final String FAILEDCASES="/src/test/resources/FailedCases.csv";
+	public final String PASSEDCASES="/src/test/resources/PassedCases.csv";
+	public final String SKIPPEDCASES="/src/test/resources/SkippedCases.csv";
+	public final String sEXECUTIONSTATUS="/src/test/resources/ExecutionStatus.csv";
+	public final String sBARCHARTLOCATION="/src/test/resources/GroupsReport.jpeg";
 	//public final String sURL="http://172.24.2.38:9090/Login.aspx";
 }

@@ -164,7 +164,7 @@ public WebDriver openBrowser(String browserType) {
 		logger.info("The Profile Setup Data");
 		driver = new FirefoxDriver(profile);
 	} else if (browserType.equalsIgnoreCase("Chrome")) {
-		logger.info("Running on chrome browser");
+		logger.info("Running on chrome browser-----------"+System.getProperty("user.dir") + sCHROMEPATH);
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + sCHROMEPATH);
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);

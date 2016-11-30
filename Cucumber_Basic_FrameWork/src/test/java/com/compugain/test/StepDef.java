@@ -3,6 +3,7 @@ package com.compugain.test;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -15,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.compugain.Utils.CustomReport;
 import com.compugain.Utils.EmailUtility;
 import com.compugain.Utils.ReadAndWriteToJSON;
 import com.compugain.Utils.WebElements;
@@ -40,8 +42,6 @@ public class StepDef extends TestBase  {
 
 	String emailvalue;
 
-	
-
 	private static Logger logger = Logger.getLogger(StepDef.class);
 
 	private Map<String, String> userdetailsmap;
@@ -53,6 +53,9 @@ public class StepDef extends TestBase  {
 	private ReadAndWriteToJSON readdatajson;
 	private UserCreateApi userCreationApi;
 	public static final String validData="allmandatory";
+	private CustomReport customreport = new CustomReport();
+	private List<String> statusValue;
+	private String sTestcaseName;
 	
 	int i=1;
 	
@@ -69,6 +72,7 @@ public class StepDef extends TestBase  {
 		long threadId = Thread.currentThread().getId();
 		String processName = ManagementFactory.getRuntimeMXBean().getName();
 		System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
+		statusValue = new ArrayList<String>();
 	}
 
 	@Given("^I go to \"([^\"]*)\" on \"([^\"]*)\"$")
@@ -162,9 +166,7 @@ public class StepDef extends TestBase  {
 		System.out.println("THe response data map is"+responsedata);
 		userCreationApi.deleteUserApi(responsedata);
 		
-		
 	}
-	
 	
 	
 	@And("I click enter on \"([^\"]*)\"$")
@@ -235,16 +237,21 @@ public class StepDef extends TestBase  {
 		default:
 			
 			break;
+			}
 		}
-
-		/*
-		 * boolean result = webelements.isDisplayed(webElement) String
-		 * actualResult = null;
-		 * 
-		 * if(result) actualResult="success"; else actualResult="failure";
-		 * Assert.assertEquals(expectedResult, actualResult);
-		 */
+	
+	@Then("^Expected and ActualAssertion \"([^\"]*)\" as \"([^\"]*)\"$")
+	public void ExpectedActual_Assertion(String expectedResult, String Actual) {
+		System.out.println("Expected" + expectedResult);
+		System.out.println("Actual" + expectedResult);
+		customreport.customizedReport(expectedResult, Actual, statusValue, driver, sTestcaseName);
 	}
+	
+	@Then("^Expected and Actual \"([^\"]*)\"$")
+	public void I_Verify_CheckingList(String statusvalue) {
+		customreport.checkinglist(statusValue);
+	}
+	
 	
 	//Avenger Application Specific
 	public JSONObject createUserJSON(String roleid) {
@@ -261,7 +268,6 @@ public class StepDef extends TestBase  {
 		return userDetailsJson;
 	}
 
-	
 	
 	@After
 	public void embedScreenshot(Scenario scenario) {

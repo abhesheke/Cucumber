@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <suite name="Suite" parallel="tests">
+<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener class-name="com.compugain.Utils.CustomReporter" />
+	</listeners>
 <test name="cucumber">
 <packages>
 
 <package name="com.compugain.test"/>
-</packages>
+</packages>"src/main/resources/AmazonIn.feature"
 </test>
 </suite>
