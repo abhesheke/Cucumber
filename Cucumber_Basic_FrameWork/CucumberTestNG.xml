@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<suite name="Suite" parallel="tests">
+<suite name="Cucumber Execution" parallel="tests">
 <listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
@@ -10,6 +10,6 @@
 <packages>
 
 <package name="com.compugain.test"/>
-</packages>"src/main/resources/AmazonIn.feature"
+</packages>
 </test>
 </suite>
