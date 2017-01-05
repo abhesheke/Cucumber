@@ -8,7 +8,7 @@ And I enter text into "amazonsearchbox" as "iphone6s"
 And I click on "amazonsearchbutton"
 And I click on "amazoncomiphone6s"
 And I get text for "iphone6srosecolorprice"
-Then Search should be "pass"
+Then Expected and ActualAssertion "iphone6srosecolorprice" as "$489.95"
 
 Scenario: Verify checkout address for amazon.com
 
@@ -25,3 +25,5 @@ And I click on "amazonsiginbutton"
 And I click on "amazonshippingaddress"
 And I get text for "amazonshippingerrormeg"
 Then Search should be "pass"
+
+

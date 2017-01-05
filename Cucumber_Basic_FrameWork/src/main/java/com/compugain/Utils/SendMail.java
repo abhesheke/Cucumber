@@ -4,6 +4,7 @@ package com.compugain.Utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.InetAddress;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -32,6 +33,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.Multipart;
 import javax.mail.BodyPart;
 import com.compugain.setup.Setup;
+import com.compugain.test.StepDef;
 
 
 /**
@@ -41,7 +43,7 @@ import com.compugain.setup.Setup;
 public class  SendMail implements Setup
 {    
 	private static Logger logger = Logger.getLogger(SendMail.class);
-	
+	private StepDef stepdef= new StepDef();
 	public static boolean isEmpty(String item) {
 		if (item == null) {
 			return true;
@@ -208,7 +210,7 @@ public class  SendMail implements Setup
 		
 
 		//----------------------
-		StringBuffer body = new StringBuffer("<html>Please find the execution status below :"+getAutomationURL()+"<br>"+"System Executed Ip Address:");
+		StringBuffer body = new StringBuffer("<html>Please find the execution status below :"+""+"<br>"+"System Executed Ip Address:"+InetAddress.getLocalHost().getHostAddress());
 		body.append("<img src=\"cid:image1\"/>");
 		//body.append("<img src=\"cid:image2\"/><br>");
 
@@ -380,15 +382,15 @@ public class  SendMail implements Setup
 		logger.info("The test case file path" + param);
 		return param;
 	}
-	
-	public static String getAutomationURL() {
-		String param = System.getProperty("envurl");
+
+	/*static url;
+	public static String getAutomationURL(String sUrl) {
+		String param = System.getProperty("url");
 		
 		if (isEmpty(param)) {
-				//return AutomationURL;
+				return sUrl;
 		}
-		logger.info("The parameter of Username from pom" + param);
+		logger.info("The parameter of Username from pom" + param);*/
 //		logger.info("The Automation URL is not from Pom" + AutomationURL_);
-		return param;
+//		return param;
 	}
-}

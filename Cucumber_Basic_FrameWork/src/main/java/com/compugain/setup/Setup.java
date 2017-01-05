@@ -11,8 +11,9 @@ public interface Setup {
 	public final String sCARWALEFEATURE="src/main/resources/carwale.feature";
 	public final String sAMAZONIN="src/main/resources/AmazonIn.feature";
 	public final String sAMAZONCOM="src/main/resources/AmazonCom.feature";
+	public final String sAMAZONCOMDATA="src/main/resources/AmazonComDataPassing.feature";
 	public final String sAMAZONCOMBAGSEARCH="src/main/resources/AmazonComBagSearch.feature";
-	public final String sYAHOO="src/main/resources/yahoo.feature";
+	public final String sYAHOO="src/main/resources/sanity/yahoo.feature";
 	public final String sTATASKY="src/test/resources/Features/TataSky.feature";
 	public final String sAPIUSERCREATION="src/test/resources/Features/CucumberAPI.feature";
 	public final String sCUCUMBERAPI="src/main/resources/CucumberAPI.feature";
@@ -20,7 +21,7 @@ public interface Setup {
 	public final String sURL="http://www.carwale.com/users/register.aspx";
 	public final int INTEGER=1,STRING=2,DOUBLE=3,FLOAT=4;
 	public final String sTESTDATAJSON="src/test/TestDataJSON/TestData.json";
-	public String sREADDATAFROMJSON="NO";
+	public String sREADDATAFROMJSON="No";
 	public final String sDOWNLOADSPATH="/src/test/Downloads";
 	public final String sSOURCE_REPORTSFOLDER="/test-output/html";
 	public final String sOUTPUT_ZIP_FILE_REPORTS = "/BackupReports";

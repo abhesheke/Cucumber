@@ -293,7 +293,7 @@ public class CustomReport {
 	}
 
 	public String AssertionresultOutput(WebDriver driver, String sTestcaseName) {
-		String sScreenshots = "/target/surefire-reports/Screenshots";
+	/*	String sScreenshots = "/target/surefire-reports/Screenshots";
 		String sFilepath = getFilePath(sScreenshots) + "\\";
 		String sScreenshotName = null;
 		System.setProperty("org.uncommons.reportng.escape-output", "false");
@@ -306,22 +306,22 @@ public class CustomReport {
 			Screenshot 	screenshot = new AShot().shootingStrategy(new ViewportPastingStrategy(1000)).takeScreenshot(driver);
 			ImageIO.write(screenshot.getImage(), "PNG", new File(sFilepath + sScreenshotName));
 
-		/*	File scrFile = ((TakesScreenshot) driver)
+			File scrFile = ((TakesScreenshot) driver)
 					.getScreenshotAs(OutputType.FILE);
 			FileUtils.copyFile(scrFile, new File(sFilepath + sScreenshotName));
 			logger.info("SRC FIle Location for ScreenShot" + "::::"
 					+ scrFile.getAbsolutePath());
 			logger.info("The screenshot stored in location" + sFilepath
 					+ sScreenshotName);
-*/
+
 		} catch (Exception e1) {
 			// logger.error("Exception caught in screenshotcreation block");
 			e1.printStackTrace();
 		}
 		return "<a href=\""+sFilepath+"" + sScreenshotName
 				+ "\"><p align=\"left\"><h5>Error screenshot :: "
-				+ sScreenshotName + "</h5></p></a>";
-	    //return "value";    
+				+ sScreenshotName + "</h5></p></a>";*/
+	    return "value";    
 	}
 
 	/**

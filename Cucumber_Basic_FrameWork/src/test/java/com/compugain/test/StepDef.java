@@ -44,7 +44,7 @@ public class StepDef extends TestBase  {
 
 	private static Logger logger = Logger.getLogger(StepDef.class);
 
-	private Map<String, String> userdetailsmap;
+	private Map<String, String> userdetailsmap ;
 	public Map<String, String> PropertiesMap;
 	private BeanFactory beanfactory = new BeanFactory();
 	private PropertiesFactory propertiesfactory;
@@ -56,13 +56,30 @@ public class StepDef extends TestBase  {
 	private CustomReport customreport = new CustomReport();
 	private List<String> statusValue;
 	private String sTestcaseName;
-	
 	int i=1;
+
+	private Scenario scenario;
 	
 	@Before
+	 public void setUp(Scenario scenario) {
+        System.out.println("@@@@@#########::::::::::::"+scenario.getName());
+
+    }
+
+	/*public void before(Scenario scenario) {
+	    this.scenario = scenario;
+	    scenario.getName();
+	    //scenario.getSourceTagNames();
+	    //scenario.getStatus();
+	    logger.info("The Scenario names are::::::"+scenario.getName());
+	    System.out.println("The Scenario names are::::::"+scenario.getName());
+	   // System.out.println("The Tag names are::::::"+ scenario.getSourceTagNames());
+	    //System.out.println("The Scenario status are::::::"+ scenario.getStatus());
+	}*/
+	
 	public void setUP() {
 		if(i==1)
-		//beanfactory = new BeanFactory();
+		beanfactory = new BeanFactory();
 		propertiesfactory = new PropertiesFactory();
 		userdetailsmap = beanfactory.getUserDetails(); // testdata
 		PropertiesMap = propertiesfactory.getObjectProperties(); // locators
@@ -73,6 +90,7 @@ public class StepDef extends TestBase  {
 		String processName = ManagementFactory.getRuntimeMXBean().getName();
 		System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
 		statusValue = new ArrayList<String>();
+		
 	}
 
 	@Given("^I go to \"([^\"]*)\" on \"([^\"]*)\"$")
@@ -81,24 +99,55 @@ public class StepDef extends TestBase  {
 		driverWait = new WebDriverWait(driver, 10);
 		emailutil = new EmailUtility(driver, driverWait);
 		webelements = new WebElements(driver, driverWait);
-		System.out.println("I am going to " + url + " on " + Browser);
+		//System.out.println("I am going to " + url + " on " + Browser);
 		logger.info("The driver value is " + Browser);
-		logger.info("The url value is " + url);
+		logger.info("I am going to " + url + " on " + Browser);
+		//logger.info("The url value is " + url);
 		// webelements.openBrowser(sBROWSER);
 		webelements.navigateBrowser(url);
 	}
 
+	//static LinkedHashMap<String, ArrayList<String>> featurefilename=new LinkedHashMap<>();
+	
+	public static ArrayList<String> featurelist=new ArrayList<String>();
+	@And("^I get Feature Name is \"([^\"]*)\"$")
+	public ArrayList<String> I_get_Feature_Name(String FeatureName) {
+		featurelist.add(FeatureName);
+		//System.out.println("FeatureNameLIST ::::::: "+featurelist);
+		//logger.info("FeatureNameLIST ::::::: "+featurelist);
+		return featurelist;
+	} 
+	
+	public static ArrayList<String> scenariosList=new ArrayList<String>();
+	@And("^I get Scenario Name is \"([^\"]*)\"$")
+	public ArrayList<String> I_get_Scenario_Name(String ScenarioName) {
+		//logger.info("ScenarioName ::::::: "+ScenarioName);
+		//System.out.println("ScenarioName ::::::: "+ScenarioName);
+		scenariosList.add(ScenarioName);
+		//logger.info("ScenarioName LIST ::::::: "+scenariosList);
+		//System.out.println("ScenarioName LIST ::::::: "+scenariosList);
+	return scenariosList;
+	} 
+	
+	/*static LinkedHashMap<ArrayList<String>, ArrayList<String>> featurescenarionames;
+	public LinkedHashMap<ArrayList<String>, ArrayList<String>> getScenarioName_FeatureName(String FeatureName, String ScenarioName){
+		featurescenarionames.put(featurelist, scenariosList);
+	return featurescenarionames;
+	}*/
+	
+	
+	
 	@And("^I enter text into \"([^\"]*)\" as \"([^\"]*)\"$")
 	public void I_enter_text_into(String objectprop, String text) throws Exception {
-		System.out.println("Webelemt" + webelements);
-		System.out.println("driverWait" + driverWait);
-		System.out.println("userdetailsmap.get(text)" + userdetailsmap.get(text));
-		System.out.println("webelements.getpageTitle()" + webelements.getpageTitle());
+		//logger.info("Webelemt" + webelements);
+		//logger.info("driverWait" + driverWait);
+		logger.info("userdetailsmap.get(text)" + userdetailsmap.get(text));
+		logger.info("webelements.getpageTitle()" + webelements.getpageTitle());
 		//String valuefrombean=beanfactory.getdata(text);
-		logger.info("@@@@0-prop------"+PropertiesMap.get(objectprop));
-		logger.info("@@@@0-driverWait------"+driverWait);
-		logger.info("@@@@0-userdetailsmap.get(text).toString()------"+userdetailsmap.get(text).toString());
-
+		/*logger.info("@@@@0-prop------"+PropertiesMap.get(objectprop));
+		logger.info("@@@@0-driverWait------"+driverWait);*/
+    	/*logger.info("@@@@0-userdetailsmap.get(text).toString()------"+userdetailsmap.get(text).toString());
+*/
 		Thread.sleep(5000);
 		webelements.enterText(PropertiesMap.get(objectprop), driverWait, userdetailsmap.get(text).toString());
 	}
@@ -107,11 +156,11 @@ public class StepDef extends TestBase  {
 
 	public void I_Create_users(String users) {
 		webelements.creatingusers(users);
-
 	}
 
 	@And("^I click on \"([^\"]*)\"$")
 	public void I_click_on(String objectprop) {
+		logger.info("clicking on" + objectprop);
 		System.out.println("clicking on" + objectprop);
 		webelements.click(propertiesfactory.getObjectProperties().get(objectprop));
 	}
@@ -125,11 +174,13 @@ public class StepDef extends TestBase  {
 	public void I_want_to_switch_window_on(String objectprop){
 		webelements.shiftnewindow();
 		System.out.println("I have switched to child window");
+		logger.info("I have switched to child window");
 	}
 	
 	@And("^I get text for \"([^\"]*)\"$")
 		public void I_get_text_for(String objectprop) throws Exception {
 		System.out.println("Object displayed on screen" + objectprop);
+		logger.info("Object displayed on screen" + objectprop);
 		//PropertiesMap = propertiesfactory.getObjectProperties();
 		//String stext=webelements.getTextfromscreen(PropertiesMap.get(objectprop));
 		Thread.sleep(5000);
@@ -140,8 +191,16 @@ public class StepDef extends TestBase  {
 	// Amazon Application Specific
 	@And("^I select Amazoncom \"([^\"]*)\"$")
 	public void I_select_Amazoncom(String objectprop){
-		System.out.println("clicking on" + objectprop);
-		webelements.click( propertiesfactory.getObjectProperties().get(objectprop));
+		if (webelements.isDisplayedWithoutException(propertiesfactory.getObjectProperties().get(objectprop))) {
+			webelements.click( propertiesfactory.getObjectProperties().get(objectprop));
+			System.out.println("clicking on" + objectprop);
+			logger.info("clicking on" + objectprop);
+		}
+		else {
+			System.out.println("POP up is not visible on the page");
+			logger.info("POP up is not visible on the page");
+		}
+		
 	}
 	
 	// Avenger Application Specific API
@@ -162,8 +221,10 @@ public class StepDef extends TestBase  {
 	
 	@And("I delete user from api \"([^\"]*)\"$")
 	public void I_delete_user_from_api(ArrayList<String> acTokenAndUserId){
+		logger.info("I am in Delete user from API method");
+		logger.info("The response data map is"+responsedata);
 		System.out.println("I am in Delete user from API method");
-		System.out.println("THe response data map is"+responsedata);
+		System.out.println("The response data map is"+responsedata);
 		userCreationApi.deleteUserApi(responsedata);
 		
 	}
@@ -176,6 +237,7 @@ public class StepDef extends TestBase  {
 	
 	@Then("^I Verify element displayed on Screen \"([^\"]*)\" is \"([^\"]*)\"$")
 	public void I_Verify_element_displayed_on_Screen(String expected,String objectprop) throws InterruptedException{
+		logger.info("clicking on" + objectprop);
 		System.out.println("clicking on" + objectprop);
 		PropertiesMap = propertiesfactory.getObjectProperties();
 		/*System.out.println("The expected value sent is"+expected);
@@ -189,6 +251,8 @@ public class StepDef extends TestBase  {
 	
 	@Then("^Expected and Actual \"([^\"]*)\" as \"([^\"]*)\"$")
 	public void Expected_And_Actual (String expectedResult, String ActualResult) {
+		logger.info("Expected" + expectedResult);
+		logger.info("Actual" + PropertiesMap.get(ActualResult));
 		System.out.println("Expected" + expectedResult);
 		System.out.println("Actual" + PropertiesMap.get(ActualResult));
 		Assert.assertEquals(true,expectedResult.contains(PropertiesMap.get(ActualResult)));
@@ -203,7 +267,9 @@ public class StepDef extends TestBase  {
 	
 	@Then("^Expected and Actual Is \"([^\"]*)\" as \"([^\"]*)\"$")
 	public void Expected_And_Actual_Is (String expectedResult, String ActualResult) {
-		System.out.println("Expected" + expectedResult);
+		logger.info("Expected" + ActualResult);
+		logger.info("Actual" + PropertiesMap.get(ActualResult));
+		System.out.println("Expected" + ActualResult);
 		System.out.println("Actual" + PropertiesMap.get(ActualResult));
 		Assert.assertEquals(expectedResult,ActualResult);
 		/*
@@ -219,7 +285,8 @@ public class StepDef extends TestBase  {
 	public void Expected_Actual(String expectedResult, String Actual, String i) {
 		System.out.println("Expected" + expectedResult);
 		System.out.println("Actual" + expectedResult);
-
+		logger.info("Expected" + expectedResult);
+		logger.info("Actual" + expectedResult);
 		switch (Integer.parseInt(i)) {
 		case INTEGER:
 				Assert.assertEquals(Integer.valueOf(expectedResult), Integer.valueOf(Actual));
@@ -242,13 +309,20 @@ public class StepDef extends TestBase  {
 	
 	@Then("^Expected and ActualAssertion \"([^\"]*)\" as \"([^\"]*)\"$")
 	public void ExpectedActual_Assertion(String expectedResult, String Actual) {
+		logger.info("Expected" + expectedResult);
+		logger.info("Actual" + expectedResult);
+		logger.info("###############"+PropertiesMap.get(expectedResult));
 		System.out.println("Expected" + expectedResult);
 		System.out.println("Actual" + expectedResult);
-		customreport.customizedReport(expectedResult, Actual, statusValue, driver, sTestcaseName);
+		System.out.println("###############"+PropertiesMap.get(expectedResult));
+		Assert.assertEquals(expectedResult,Actual);
+		customreport.customizedReport(PropertiesMap.get(expectedResult), Actual, statusValue, driver, sTestcaseName);
 	}
 	
-	@Then("^Expected and Actual \"([^\"]*)\"$")
+	@Then("^I Verify CheckingList \"([^\"]*)\"$")
 	public void I_Verify_CheckingList(String statusvalue) {
+		System.out.println("I am in Checking list");
+		logger.info("I am in Checking list");
 		customreport.checkinglist(statusValue);
 	}
 	
@@ -264,13 +338,28 @@ public class StepDef extends TestBase  {
 		JSONArray myArray = new JSONArray();
 		myArray.add(roleid);
 		userDetailsJson.put("roleIds", myArray);
+		logger.info("JOSN is " + userDetailsJson);
 		System.out.println("JOSN is " + userDetailsJson);
 		return userDetailsJson;
 	}
 
-	
+	 
 	@After
+	/*public void before(Scenario scenario) {
+	    this.scenario = scenario;
+	    scenario.getName();
+	    //scenario.getSourceTagNames();
+	    scenario.getStatus();
+	    System.out.println("The Scenario names are::::::"+scenario.getName());
+	   // System.out.println("The Tag names are::::::"+ scenario.getSourceTagNames());
+	    System.out.println("The Scenario status are::::::"+ scenario.getStatus());
+	}
+	*/
 	public void embedScreenshot(Scenario scenario) {
+		 this.scenario = scenario;
+		 scenario.getStatus();
+		 logger.info("The Scenario status are::::::"+ scenario.getStatus());
+		 System.out.println("The Scenario status are::::::"+ scenario.getStatus());
 		if(scenario.isFailed()) {
 		try {
 		scenario.write("Current Page URL is " + driver.getCurrentUrl());

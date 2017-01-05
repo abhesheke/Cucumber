@@ -164,7 +164,7 @@ public WebDriver openBrowser(String browserType) {
 		logger.info("The Profile Setup Data");
 		driver = new FirefoxDriver(profile);
 	} else if (browserType.equalsIgnoreCase("Chrome")) {
-		logger.info("Running on chrome browser-----------"+System.getProperty("user.dir") + sCHROMEPATH);
+	//	logger.info("Running on chrome browser-----------"+System.getProperty("user.dir") + sCHROMEPATH);
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + sCHROMEPATH);
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -179,7 +179,7 @@ public WebDriver openBrowser(String browserType) {
 		cap.setCapability(ChromeOptions.CAPABILITY, options);
 		options.addArguments("--always-authorize-plugins");
 		options.addArguments("--ignore-certificate-errors");
-		logger.info("The Chrome Profile is setup");
+		//logger.info("The Chrome Profile is setup");
 		driver = new ChromeDriver(options);
 	} else if (browserType.equals("IE")) {
 		System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") +sIEPATH);

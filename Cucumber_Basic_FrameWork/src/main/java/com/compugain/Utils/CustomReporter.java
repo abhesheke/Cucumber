@@ -3,9 +3,12 @@ package com.compugain.Utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -20,10 +23,14 @@ import org.testng.xml.XmlSuite;
 import org.uncommons.reportng.ReportNGUtils;
 
 import com.compugain.setup.Setup;
+import com.compugain.test.StepDef;
+
+import cucumber.api.Scenario;
 
 
 
 public class CustomReporter implements IReporter,Setup{
+	StepDef stepdef=null;
 	private static String versionvalue="";
 	
 	String outputFile = getFilePath(sEXECUTIONSTATUS);
@@ -42,7 +49,7 @@ public class CustomReporter implements IReporter,Setup{
 
 	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites,
 			String outputDirectory) {
-		
+		stepdef = new StepDef();
 	/*	ReportNGUtils  ngutils=new ReportNGUtils();
 		ngutils.getDuration(ITestContext);
 	*/	// TODO Auto-generated method stub
@@ -62,14 +69,18 @@ public class CustomReporter implements IReporter,Setup{
 			passedwriter = new FileWriter(passedcases,false);
 			failedwriter = new FileWriter(failedcases,false);
 			skippedwriter = new FileWriter(skippedcases,false);
-			csvWritingHeading("ClassName");
+			/*csvWritingHeading("ClassName");
 			csvWritingHeading(",");
 			csvWritingHeading("Test Case Name");
+			csvWritingHeading(",");*/
+			csvWritingHeading("Feature File Name");
 			csvWritingHeading(",");
-			csvWritingHeading("Status");
+			csvWritingHeading("Scenario Name");
 			csvWritingHeading(",");
-			csvWritingHeading("Test Case Description");
-			csvWritingHeading(",");
+			/*csvWritingHeading("Status");
+			csvWritingHeading(",");*/
+			/*csvWritingHeading("Test Case Description");
+			csvWritingHeading(",");*/
 			csvWritingHeading("Module Name");
 			csvWritingHeading(",");
 			csvWritingHeading("Suite Name");
@@ -241,7 +252,7 @@ public class CustomReporter implements IReporter,Setup{
 	public String getFilePath(String sFilepath) {
 		char cforwardslash = (char) 47;
 		char cbackslash = (char) 92;
-		logger.info("File path is "+sFilepath);
+		//logger.info("File path is "+sFilepath);
 		String sPath = System.getProperty("user.dir").replace(cbackslash,
 				cforwardslash)
 				+ sFilepath;
@@ -249,7 +260,7 @@ public class CustomReporter implements IReporter,Setup{
 		File file = new File(sPath);
 		if (file.exists()) {
 			sPath = file.getAbsolutePath();
-			logger.info("The File Path is " + sPath);
+		//	logger.info("The File Path is " + sPath);
 		} else {
 		}
 		return sPath;
@@ -292,38 +303,37 @@ public class CustomReporter implements IReporter,Setup{
 	 * @param filewriter:these is used for writing data to particular csv file.
 	 * @param reportingdata:these has all the steps associated with the test cases.
 	 */
+	LinkedHashMap<ArrayList<String>, ArrayList<String>> featurefilename = new LinkedHashMap<>();
+	//ArrayList<String> featurenamelist;
+	//ArrayList<String> scenariolist;
 	public void testCasesData(ITestNGMethod testcasename, FileWriter filewriter, List<String> reportingdata, String suiteName, String testcaseDuration)
 	{
-		logger.info("Test Case Name:"+testcasename.getXmlTest().getName());
-		//these will get the class name of the test case.
-		csvWrite(filewriter,testcasename.getRealClass().toString().replace("class ",""));
+		//featurenamelist=stepdef.I_get_Feature_Name("");
+		//scenariolist=stepdef.I_get_Scenario_Name("");
+		System.out.println("The Feature Name LIST is :::::::::::"+StepDef.featurelist);
+		System.out.println("The Scenario Name LIST is :::::::::::"+StepDef.scenariosList);
+		featurefilename.put(StepDef.featurelist, StepDef.scenariosList);
+		//featurefilename=stepdef.I_get_Scenario_Name("");
+		for (Entry<ArrayList<String>, ArrayList<String>> entry : featurefilename.entrySet()) {
+			System.out.println("Key@@@@@ : " + entry.getKey() + " Value @@@@@ : " + entry.getValue());
+			ArrayList<String> f=entry.getKey();
+			for(int i=0;i<f.size();i++) {
+				csvWrite(filewriter,f.get(i));
+				//csvWrite(filewriter,",");
+				csvWrite(filewriter,"\n");
+			}
+			ArrayList<String> s=entry.getValue();
+			for(int i=0;i<s.size();i++) {
+				csvWrite(filewriter,s.get(i));
+				/*csvWrite(filewriter,"\n");
+				*/csvWrite(filewriter,",");
+			}
+		}
 		csvWrite(filewriter,",");
-		//these will get the method name of the test case.
-		logger.info("Test Case Method Name:"+testcasename.getMethodName());
-		csvWrite(filewriter,testcasename.getMethodName());
-		csvWrite(filewriter,",");
-		csvWrite(filewriter,"N");
-		csvWrite(filewriter,",");
-		//these will get the description of the test case.
-		logger.info("Test Case Description:"+testcasename.getDescription());
-		csvWrite(filewriter,testcasename.getDescription().replace(","," "));
-		csvWrite(filewriter,",");
-		logger.info("The Groups for Test Cases are "+testcasename.getGroups());
-		//These method will get groups associated with test case.
-		groupsPassedMapping(testcasename.getGroups());
 		for (int i = 0; i < testcasename.getGroups().length; i++) {
 			logger.info("The individual groups are "+testcasename.getGroups()[i]);
 			csvWrite(filewriter,testcasename.getGroups()[i]);
-			csvWrite(filewriter,"-");
 		}
-		csvWrite(filewriter,",");
-		//passedwriter.append(',');
-		/*   for (String string : reportingdata) {
-			logger.info("Passed cases data is"+string);
-			writer.append(string.replace("<br>","").replace("</br>",""));
-			passedwriter.append(string.replace("<br>","").replace("</br>",""));
-		}
-		 */			//writer.append('\n');
 		csvWrite(filewriter,suiteName);
 		csvWrite(filewriter,",");
 		String OSystem = System.getProperty("os.name").toLowerCase();
@@ -337,6 +347,7 @@ public class CustomReporter implements IReporter,Setup{
 		csvWrite(filewriter,testcaseDuration);
 		csvWrite(filewriter,"\n");
 	}
+	
 	
 	 private String getDuration(Set<ITestResult> results) 
 	    { 
